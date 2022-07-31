@@ -67,6 +67,7 @@ new Vue({
                 const newNotification = new Notification(notification.title, notification)
                 if (notification.click_action) newNotification.onclick = e => open(notification.click_action)
             })
+            this.$nextTick(() => Prism.highlightAll())
         } catch (error) {
             console.error(error)
             this.permissionBlocked = true
