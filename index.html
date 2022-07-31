@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Firebase Cloud Messaging Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/themes/prism.min.css">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div id="app">
+    <header v-show="!token">
+      <h3 v-show="!permissionBlocked">Please allow notification</h3>
+      <img src="https://i.imgur.com/XYLeiif.jpg" v-show="permissionBlocked">
+      <br>
+      <img src="https://i.imgur.com/4zoYAFB.jpg" v-show="permissionBlocked">
+      <br>
+      <img src="https://i.imgur.com/Bz0f30N.png" v-show="permissionBlocked">
+      <br>
+      <img src="https://i.imgur.com/mthjgWl.jpg" v-show="permissionBlocked">
+      <br>
+      <img src="https://i.imgur.com/xmYEJYK.png" v-show="!permissionBlocked">
+    </header>
+    <main v-show="token">
+      <div class="tab-root">
+        <template v-for="(func, language) in languages">
+          <input type="radio" name="token" :id="language" :checked="language === 'curl' ? true : false" />
+          <label :for="language">{{ language }}</label>
+          <div class="content">
+            <pre><code :class="detectLang(language)">{{ func(token) }}</code></pre>
+            <button class="execute" @click="execute(token)">Execute</button>
+            <button class="copy" @click="copy(func(token))">Copy</button>
+          </div>
+        </template>
+      </div>
+      <form class="topic-form" @submit="add">
+        <a href="https://firebase.google.com/docs/cloud-messaging/send-message#send-messages-to-topics-legacy"
+          target="_blank">Topic name</a>:
+        <input v-model="topic" placeholder="[a-zA-Z0-9-_.~%]+" required pattern="[a-zA-Z0-9-_.~%]+" />
+        <button>Add</button>
+      </form>
+      <div class="tab-root" v-for="topic in topics" :key="topic">
+        <template v-for="(func, language) in languages">
+          <input type="radio" :name="topic" :id="language + topic" :checked="language === 'curl' ? true : false" />
+          <label :for="language + topic">{{ language }}</label>
+          <div class="content">
+            <pre><code :class="detectLang(language)">{{ func('/topics/' + topic) }}</code></pre>
+            <button class="execute" @click="execute('/topics/' + topic)">Execute</button>
+            <button class="copy" @click="copy(func('/topics/' + topic))">Copy</button>
+          </div>
+        </template>
+      </div>
+    </main>
+  </div>
+  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.19.1/firebase-messaging.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/prism.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-bash.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/prismjs@1.28.0/components/prism-python.min.js"></script>
+  <script src="script.js"></script>
+</body>
+
+</html>
