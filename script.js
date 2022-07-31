@@ -57,8 +57,9 @@ new Vue({
     el: '#app',
     async mounted() {
         firebase.initializeApp(firebaseConfig);
+        const swRegistration = await navigator.serviceWorker.register('/notify-send/firebase-messaging-sw.js')
         try {
-            const token = await firebase.messaging().getToken()
+            const token = await firebase.messaging().getToken({ serviceWorkerRegistration: swRegistration })
             console.log(token)
             this.token = token
             firebase.messaging().onMessage(({ notification }) => {
