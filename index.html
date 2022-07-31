@@ -23,7 +23,7 @@
       <br>
       <img src="https://i.imgur.com/xmYEJYK.png" v-show="!permissionBlocked">
     </header>
-    <main v-show="token">
+    <main v-if="token">
       <div class="tab-root">
         <template v-for="(func, language) in languages">
           <input type="radio" name="token" :id="language" :checked="language === 'curl' ? true : false" />
