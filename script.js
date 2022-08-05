@@ -119,7 +119,7 @@ new Vue({
             textarea.select()
             document.execCommand('copy')
             document.body.removeChild(textarea)
-            new Notification('Copied!')
+            alert('Copied!')
         }
     }
 })
