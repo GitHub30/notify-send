@@ -19,7 +19,7 @@ headers = {
 json = {
     'to': '${to}',
     'notification': {
-        'title': 'Hello',
+        'title': 'Hola',
         'body': 'Hello from Firebase',
         'click_action': 'https://example.com'
     }
